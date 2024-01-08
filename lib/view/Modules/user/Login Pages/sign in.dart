@@ -101,7 +101,7 @@ class _SigninnnState extends State<Signinnn> {
                 padding: const EdgeInsets.all(20),
                 child: TextFormField(
                   controller: userController,
-                  obscureText: passToggle,
+                  // obscureText: passToggle,
                   decoration: const InputDecoration(
                     filled: true,
                     fillColor: Color(0xCEFFD465),

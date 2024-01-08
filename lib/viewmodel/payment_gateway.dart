@@ -6,7 +6,6 @@ class PaymentGateway with ChangeNotifier {
   UpiResponse? upiResponse;
   UpiIndia _upiIndia = UpiIndia();
   String? transactionId;
- 
 
   List<UpiApp> apps = [];
   Future getAllApps() async {
@@ -20,34 +19,36 @@ class PaymentGateway with ChangeNotifier {
     });
   }
 
-  Future initiateTransaction(UpiApp app, upiID, receiverNmae, price) async {
-
+  Future initiateTransaction(
+      UpiApp app, upiID, receiverNmae, price, context) async {
     try {
-      _upiIndia
-          .startTransaction(
+
+      
+      _upiIndia.startTransaction(
         app: app,
         receiverUpiId: "kamalmuthanayil9747958478-2@okicici",
         receiverName: receiverNmae,
         transactionRefId: 'TestingUpiIndiaPlugin',
         transactionNote: 'Payment to TRAADE-HUB',
         amount: price,
-      )
-          .then((value) {
-        print(transactionId = value.responseCode);
+      );
+      //     .then((value) {
 
-        if (value.status == UpiPaymentStatus.SUBMITTED) {
-          print("a");
-        } else if (value.status == UpiPaymentStatus.SUBMITTED) {
-          print("b");
-        } else if (value.status == UpiPaymentStatus.SUBMITTED) {
-          print("c");
-        } else if (value.status == UpiPaymentStatus.SUBMITTED) {
-          print("d");
-        } else {
-          print("hgjj");
-        }
-        // checkTnsctionStatus(value.status);
-      });
+      //   // print(transactionId = value.responseCode);
+
+      //   // if (value.status == UpiPaymentStatus.SUBMITTED) {
+      //   //   print("a");
+      //   // } else if (value.status == UpiPaymentStatus.SUBMITTED) {
+      //   //   print("b");
+      //   // } else if (value.status == UpiPaymentStatus.SUBMITTED) {
+      //   //   print("c");
+      //   // } else if (value.status == UpiPaymentStatus.SUBMITTED) {
+      //   //   print("d");
+      //   // } else {
+      //   //   print("hgjj");
+      //   // }
+      //   // checkTnsctionStatus(value.status);
+      // });
     } catch (e) {
       print("$e    hhhhhhhhhhhhhhhhhhhhhh");
     }

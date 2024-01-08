@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -17,14 +18,14 @@ class _ShippedOrderForAdminState extends State<ShippedOrderForAdmin> {
       backgroundColor: const Color(0xffFF6565),
       body: Consumer<Firestore>(builder: (context, firestore, child) {
         return FutureBuilder(
-            future: firestore.fetchAllCompletdOrderOrderForAdmin(),
+            future: firestore.fetchAllCompletdOrderOrderForAdmin(FirebaseAuth.instance.currentUser!.uid),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
               }
-              return firestore.allCompletedOrderLists.isEmpty
+              return firestore.allCompletedOrderListsinShop.isEmpty
                   ? Center(
                       child: Text("No Data"),
                     )
@@ -38,13 +39,13 @@ class _ShippedOrderForAdminState extends State<ShippedOrderForAdmin> {
                                   image: DecorationImage(
                                       fit: BoxFit.fill,
                                       image: NetworkImage(firestore
-                                          .allCompletedOrderLists[index]
+                                          .allCompletedOrderListsinShop[index]
                                           .image))),
                             ),
                             title: Text(firestore
-                                .allCompletedOrderLists[index].productName),
+                                .allCompletedOrderListsinShop[index].productName),
                             subtitle: Text(
-                                firestore.allCompletedOrderLists[index].amount),
+                                firestore.allCompletedOrderListsinShop[index].amount),
                             trailing: ElevatedButton(
                              onPressed: (){},
                                 
@@ -53,7 +54,7 @@ class _ShippedOrderForAdminState extends State<ShippedOrderForAdmin> {
                                 )));
                       },
                       separatorBuilder: (context, index) => Divider(),
-                      itemCount: firestore.allCompletedOrderLists.length);
+                      itemCount: firestore.allCompletedOrderListsinShop.length);
             });
       }),
     );

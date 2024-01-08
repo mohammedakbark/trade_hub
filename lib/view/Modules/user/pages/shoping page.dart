@@ -46,35 +46,35 @@ class _ShoppingpageeeState extends State<Shoppingpageee> {
                               fontSize: 28,
                               color: const Color(0xffB7A6FC)),
                         ),
-                        const Icon(
-                          Icons.shopping_cart_outlined,
-                          size: 30,
-                        )
+                        // const Icon(
+                        //   Icons.shopping_cart_outlined,
+                        //   size: 30,
+                        // )
                       ],
                     ),
                   ),
 
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
-                    child: Container(
-                      width: 340,
-                      height: 36,
-                      decoration: BoxDecoration(
-                          color: const Color(0x60B7A6FC),
-                          borderRadius: BorderRadius.circular(6)),
-                      child: const TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Search here',
-                            prefixIcon: Icon(Icons.search),
-                            hintStyle: TextStyle(
-                                color: Color(0xff544C4C),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14)),
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding:
+                  //       const EdgeInsets.only(left: 20, right: 20, top: 10),
+                  //   child: Container(
+                  //     width: 340,
+                  //     height: 36,
+                  //     decoration: BoxDecoration(
+                  //         color: const Color(0x60B7A6FC),
+                  //         borderRadius: BorderRadius.circular(6)),
+                  //     child: const TextField(
+                  //       decoration: InputDecoration(
+                  //           border: InputBorder.none,
+                  //           hintText: 'Search here',
+                  //           prefixIcon: Icon(Icons.search),
+                  //           hintStyle: TextStyle(
+                  //               color: Color(0xff544C4C),
+                  //               fontWeight: FontWeight.w500,
+                  //               fontSize: 14)),
+                  //     ),
+                  //   ),
+                  // ),
 
                   //====================================================================================================================
 
@@ -198,9 +198,12 @@ class _ShoppingpageeeState extends State<Shoppingpageee> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             BuySelectedProductPage(
-                                              shopName:"${ controller.allProductData?[index].shopName}" ,
-                                              upiID:"${ controller.allProductData?[index].upiID}" ,
-                                              shopID:"${ controller.allProductData?[index].shopId}",
+                                              shopName:
+                                                  "${controller.allProductData?[index].shopName}",
+                                              upiID:
+                                                  "${controller.allProductData?[index].upiID}",
+                                              shopID:
+                                                  "${controller.allProductData?[index].shopId}",
                                               selectedProductID:
                                                   "${controller.allProductData?[index].productId}",
                                             )));

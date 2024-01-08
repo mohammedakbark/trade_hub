@@ -21,9 +21,11 @@ class CartPage extends StatefulWidget {
   String description;
   String upiId;
   String shopName;
+  String selectedShoId;
   CartPage(
       {super.key,
       required this.productId,
+      required this.selectedShoId,
       required this.currentUserName,
       required this.isdeliveryfree,
       required this.price,
@@ -475,56 +477,51 @@ class _CartPageState extends State<CartPage> {
                   if (controller.counter != 0) {
                     double doubleprice = double.parse(widget.price.toString());
 
-
                     // ============================this code is needed for payment option ,============================
 
 //======================
 
-
-
-
                     // firestore.addtoMyOrder(FirebaseAuth.instance.currentUser!.uid, SuccessPaymentMoel(amount: "${widget.price}", quantity: "${controller.counter}", userID: FirebaseAuth.instance.currentUser!.uid, status: "Active", from: "${firestore.userModel?.name}", image: widget.productImage, productID: widget.id, productName: productName, to: to, transactionId: transactionId))
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => SelectPaymentOptionPage(
-                    //           discreption: widget.description,
-                    //               price: doubleprice,
-                    //               shopName: widget.shopName,
-                    //               upiID: widget.upiId,
-                    //               image: widget.productImage,
-                    //               profName: widget.productName,
-                    //               quntity: "${controller.counter}",
-                    //               proID: widget.productId,
-                    //             )));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SelectPaymentOptionPage(
+                              selectedShoId: widget.selectedShoId,
+                                  discreption: widget.description,
+                                  price: doubleprice,
+                                  shopName: widget.shopName,
+                                  upiID: widget.upiId,
+                                  image: widget.productImage,
+                                  profName: widget.productName,
+                                  quntity: "${controller.counter}",
+                                  proID: widget.productId,
+                                )));
 
-                            
-                    
-                    firestore.addtoMyOrder(
-                        FirebaseAuth.instance.currentUser!.uid,
-                        SuccessPaymentMoel(
-                            amount: "${widget.price}",
-                            quantity: "${controller.counter}",
-                            userID: FirebaseAuth.instance.currentUser!.uid,
-                            status: "Active",
-                            from: "${firestore.userModel?.name}",
-                            image: widget.productImage,
-                            productID: widget.productId,
-                            productName: widget.productName,
-                            to: widget.shopName,
-                            transactionId: "123"));
-                            Navigator.pushReplacement(context, MaterialPageRoute(
-                      builder: (context) {
-                        return AfterPaymentPage(
-                          description: widget.description,
-                          currentUserName: widget.currentUserName,
-                          productName: widget.productName,
-                          productImage: widget.productImage,
-                          userAddress: widget.userAddress,
-                          price: controller.totalprice,
-                        );
-                      },
-                    ));
+                    // firestore.addtoMyOrder(
+                    //     FirebaseAuth.instance.currentUser!.uid,
+                    //     SuccessPaymentMoel(
+                    //         amount: "${widget.price}",
+                    //         quantity: "${controller.counter}",
+                    //         userID: FirebaseAuth.instance.currentUser!.uid,
+                    //         status: "Active",
+                    //         from: "${firestore.userModel?.name}",
+                    //         image: widget.productImage,
+                    //         productID: widget.productId,
+                    //         productName: widget.productName,
+                    //         to: widget.shopName,
+                    //         transactionId: "123"));
+                    //         Navigator.pushReplacement(context, MaterialPageRoute(
+                    //   builder: (context) {
+                    //     return AfterPaymentPage(
+                    //       description: widget.description,
+                    //       currentUserName: widget.currentUserName,
+                    //       productName: widget.productName,
+                    //       productImage: widget.productImage,
+                    //       userAddress: widget.userAddress,
+                    //       price: controller.totalprice,
+                    //     );
+                    //   },
+                    // ));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("Select the quantity and continue")));

@@ -65,9 +65,19 @@ class _EditprofileeeState extends State<Editprofileee> {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          firestore.userModel?.profileImage != "" ||
-                                  firestore.userModel?.profileImage != null
+                          firestore.userModel?.profileImage == "" ||
+                                  firestore.userModel?.profileImage == null
                               ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: SizedBox(
+                                      height: 110,
+                                      width: 110,
+                                      child: Image.asset(
+                                        'assets/noImage.png',
+                                        fit: BoxFit.fill,
+                                      )),
+                                )
+                              : ClipRRect(
                                   borderRadius: BorderRadius.circular(100),
                                   child: SizedBox(
                                     height: 110,
@@ -78,8 +88,7 @@ class _EditprofileeeState extends State<Editprofileee> {
                                       // scale: 30,
                                     ),
                                   ),
-                                )
-                              : Image.asset('assets/Ellipse (1).png'),
+                                ),
                           Padding(
                             padding: const EdgeInsets.only(left: 80, top: 60),
                             child: InkWell(

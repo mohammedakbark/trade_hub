@@ -213,7 +213,7 @@ class _AddProductPageState extends State<AddProductPage> {
                             image: DecorationImage(
                                 image: controller.productImageURL1 != null
                                     ? FileImage(controller.productImage1!)
-                                    : const AssetImage('assets/Ellipse (1).png')
+                                    : const AssetImage('assets/addImages.png',)
                                         as ImageProvider<Object>,
                                 fit: BoxFit.fill),
                             borderRadius: BorderRadius.circular(15),
@@ -249,7 +249,7 @@ class _AddProductPageState extends State<AddProductPage> {
                             image: DecorationImage(
                                 image: controller.productImageURL2 != null
                                     ? FileImage(controller.productImage2!)
-                                    : const AssetImage('assets/Ellipse (1).png')
+                                    : const AssetImage('assets/addImages.png')
                                         as ImageProvider<Object>,
                                 fit: BoxFit.fill),
                             borderRadius: BorderRadius.circular(15),

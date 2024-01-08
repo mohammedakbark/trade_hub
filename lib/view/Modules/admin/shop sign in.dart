@@ -6,6 +6,7 @@ import 'package:trade_hub/model/all_user_model.dart';
 import 'package:trade_hub/model/shopmodel.dart';
 import 'package:trade_hub/utils/variable.dart';
 import 'package:trade_hub/view/Modules/admin/homepageShop.dart';
+import 'package:trade_hub/view/Modules/admin/loginPageShop.dart';
 import 'package:trade_hub/view/Modules/admin/naviagtionShop.dart';
 import 'package:trade_hub/viewmodel/check_login_preference.dart';
 import 'package:trade_hub/viewmodel/controller.dart';
@@ -1801,11 +1802,14 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                                         FirebaseAuth.instance
                                                             .currentUser?.uid,
                                                         ShopDataModel(
-                                                          upiID: upiController.text,
+                                                            upiID: upiController
+                                                                .text,
                                                             address1:
                                                                 address1.text,
-                                                            tagImage:"${ controller.shopTagImageURL}",
-                                                            shopImage: "${controller.shopImageURL}",
+                                                            tagImage:
+                                                                "${controller.shopTagImageURL}",
+                                                            shopImage:
+                                                                "${controller.shopImageURL}",
                                                             type: "Shop",
                                                             address2:
                                                                 address2.text,
@@ -1843,13 +1847,43 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                                                 .currentUser!
                                                                 .uid));
                                                   });
-                                                  setLoginPrefertrue();
-                                                  Navigator.pushAndRemoveUntil(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              NavigationShop()),
-                                                      (route) => false);
+
+                                                  return showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: Text(
+                                                          "Account created Successful.\nNow login with Your Email & Password",
+                                                          style:
+                                                              GoogleFonts.abel(
+                                                                  fontSize: 20),
+                                                        ),
+                                                        actions: [
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                Navigator.pushAndRemoveUntil(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                LoginPageShop()),
+                                                                    (route) =>
+                                                                        false);
+                                                              },
+                                                              child: const Text(
+                                                                  "Login"))
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+
+                                                  // setLoginPrefertrue();
+                                                  // Navigator.pushAndRemoveUntil(
+                                                  //     context,
+                                                  //     MaterialPageRoute(
+                                                  //         builder: (context) =>
+                                                  //             LoginPageShop()),
+                                                  //     (route) => false);
                                                 }
                                               },
                                               child: Text("Create Account",

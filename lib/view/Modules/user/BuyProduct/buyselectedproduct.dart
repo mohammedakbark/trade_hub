@@ -490,6 +490,7 @@ class _BuySelectedProductPageState extends State<BuySelectedProductPage> {
                                       MaterialPageRoute(
                                     builder: (context) {
                                       return CartPage(
+                                        selectedShoId: widget.shopID,
                                         productId: widget.selectedProductID,
                                         shopName:widget.shopName ,
                                          upiId:widget.upiID ,

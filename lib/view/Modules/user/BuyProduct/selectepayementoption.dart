@@ -10,7 +10,7 @@ import 'package:trade_hub/viewmodel/firestore.dart';
 import 'package:trade_hub/viewmodel/payment_gateway.dart';
 import 'package:upi_india/upi_india.dart';
 
-class SelectPaymentOptionPage extends StatefulWidget {
+class SelectPaymentOptionPage extends StatelessWidget {
   String upiID;
   String shopName;
   double price;
@@ -19,8 +19,10 @@ class SelectPaymentOptionPage extends StatefulWidget {
   String profName;
   String quntity;
   String discreption;
+  String selectedShoId;
   SelectPaymentOptionPage(
       {super.key,
+      required this.selectedShoId,
       required this.discreption,
       required this.shopName,
       required this.upiID,
@@ -31,51 +33,7 @@ class SelectPaymentOptionPage extends StatefulWidget {
       required this.quntity});
 
   @override
-  State<SelectPaymentOptionPage> createState() =>
-      _SelectPaymentOptionPageState();
-}
-
-class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
-  bool paymnetoptionSelected = false;
-
-  // TODO: implement initState
-
-  @override
   Widget build(BuildContext context) {
-    //======================================temporary no working 8/1/2024
-    // final prof = Provider.of<PaymentGateway>(context);
-
-
-    // callnext()async {
-    //   final firestore = Provider.of<Firestore>(context,listen: false);
-    //   firestore.addtoMyOrder(
-    //       FirebaseAuth.instance.currentUser!.uid,
-    //       SuccessPaymentMoel(
-    //           amount: "${widget.price}",
-    //           quantity: widget.quntity,
-    //           userID: FirebaseAuth.instance.currentUser!.uid,
-    //           status: "Active",
-    //           from: "${firestore.userModel?.name}",
-    //           image: widget.image,
-    //           productID: widget.proID,
-    //           productName: widget.profName,
-    //           to: widget.shopName,
-    //           transactionId: "123"));
-
-    //   Navigator.push(context, MaterialPageRoute(
-    //     builder: (context) {
-    //       return AfterPaymentPage(
-    //         description: widget.discreption,
-    //         currentUserName: "${firestore.userModel?.name}",
-    //         productName: widget.profName,
-    //         productImage: widget.image,
-    //         userAddress: "${firestore.userModel?.deliveryAddress}",
-    //         price: widget.price.toInt(),
-    //       );
-    //     },
-    //   ));
-    // }
-
     Widget displayUpiApps(PaymentGateway paymentpro) {
       if (paymentpro.apps == null) {
         return const Center(
@@ -91,40 +49,90 @@ class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Selecte your payment option "),
+              const Text(
+                  "Selecte your payment option (long press the option) "),
               const SizedBox(
                 height: 30,
               ),
-              SingleChildScrollView(
-                child: Wrap(
-                  children: paymentpro.apps.map<Widget>((app) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          paymnetoptionSelected = true;
-                        });
+              Consumer<Firestore>(builder: (context, firestore, child) {
+                return SingleChildScrollView(
+                  child: Wrap(
+                    children: paymentpro.apps.map<Widget>((app) {
+                      return GestureDetector(
+                        onLongPress: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text(
+                                    "Do you want to redirect to ${app.name}"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("No")),
+                                  TextButton(
+                                      onPressed: () {
+                                        paymentpro.initiateTransaction(app,
+                                            upiID, shopName, price, context);
+                                      },
+                                      child: Text("Yes"))
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        onTap: () {
+                          firestore.addtoMyOrder(
+                              FirebaseAuth.instance.currentUser!.uid,
+                              SuccessPaymentMoel(
+                                  amount: "$price",
+                                  quantity: quntity,
+                                  userID:
+                                      FirebaseAuth.instance.currentUser!.uid,
+                                  status: "Active",
+                                  from: "${firestore.userModel?.name}",
+                                  image: image,
+                                  productID: proID,
+                                  productName: profName,
+                                  to: shopName,
+                                  shopId: selectedShoId),
+                              selectedShoId);
 
-                        paymentpro.initiateTransaction(
-                            app, widget.upiID, widget.shopName, widget.price);
-                      },
-                      child: SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: Column(
-                          children: [
-                            Image.memory(
-                              app.icon,
-                              height: 60,
-                              width: 60,
-                            ),
-                            Text(app.name)
-                          ],
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return AfterPaymentPage(
+                                description: discreption,
+                                currentUserName: "${firestore.userModel?.name}",
+                                productName: profName,
+                                productImage: image,
+                                userAddress:
+                                    "${firestore.userModel?.deliveryAddress}",
+                                price: price.toInt(),
+                              );
+                            },
+                          ));
+                        },
+                        child: SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: Column(
+                            children: [
+                              Image.memory(
+                                app.icon,
+                                height: 60,
+                                width: 60,
+                              ),
+                              Text(app.name)
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              }),
             ],
           ),
         );

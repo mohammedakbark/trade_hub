@@ -42,7 +42,16 @@ class _ProfileeeState extends State<Profileee> {
             Center(
               child: firestore.userModel?.profileImage == "" ||
                       firestore.userModel?.profileImage == null
-                  ? Image.asset('assets/Ellipse (1).png')
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: SizedBox(
+                          height: 110,
+                          width: 110,
+                          child: Image.asset(
+                            'assets/noImage.png',
+                            fit: BoxFit.fill,
+                          )),
+                    )
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: SizedBox(

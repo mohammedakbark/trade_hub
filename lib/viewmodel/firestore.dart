@@ -39,15 +39,22 @@ class Firestore with ChangeNotifier {
     }
   }
 
-  addtoMyOrder(userID, SuccessPaymentMoel successPaymentMoel)async {
+  addtoMyOrder(userID, SuccessPaymentMoel successPaymentMoel, shopId) async {
     final docs =
         db.collection("user").doc(userID).collection("userOrder").doc();
-   await docs.set(successPaymentMoel.tojson(docs.id));
+    await docs.set(successPaymentMoel.tojson(docs.id));
 
- await   db
-        .collection("AllOrder")
+    await db
+        .collection("Shop")
+        .doc(shopId)
+        .collection("MyOrder")
         .doc(docs.id)
         .set(successPaymentMoel.tojson(docs.id));
+
+    // await db
+    //     .collection("AllOrder")
+    //     .doc(docs.id)
+    //     .set(successPaymentMoel.tojson(docs.id));
 
     print("transactioAdded");
   }
@@ -104,7 +111,7 @@ class Firestore with ChangeNotifier {
     await db.collection("user").doc(loginId).update(userModel.toJson());
   }
 
-  updateToSUBMITOrder(selecteduserID, selectedOrderID) async {
+  updateToSUBMITOrder(selecteduserID, selectedOrderID,currentShopId) async {
     await db
         .collection("user")
         .doc(selecteduserID)
@@ -112,15 +119,22 @@ class Firestore with ChangeNotifier {
         .doc(selectedOrderID)
         .update({"status": "Completed"});
 
-    await db
-        .collection("AllOrder")
+         await db
+        .collection("Shop")
+        .doc(currentShopId)
+        .collection("MyOrder")
         .doc(selectedOrderID)
         .update({"status": "Completed"});
 
+    // await db
+    //     .collection("AllOrder")
+    //     .doc(selectedOrderID)
+    //     .update({"status": "Completed"});
+    notifyListeners();
     print("sumitted");
   }
 
-  updateToCANCELOrder(selecteduserID, selectedOrderID) async {
+  updateToCANCELOrder(selecteduserID, selectedOrderID,shopId) async {
     await db
         .collection("user")
         .doc(selecteduserID)
@@ -128,10 +142,17 @@ class Firestore with ChangeNotifier {
         .doc(selectedOrderID)
         .update({"status": "Cancel"});
 
-    await db
-        .collection("AllOrder")
+         await db
+        .collection("Shop")
+        .doc(shopId)
+        .collection("MyOrder")
         .doc(selectedOrderID)
         .update({"status": "Cancel"});
+
+    // await db
+    //     .collection("AllOrder")
+    //     .doc(selectedOrderID)
+    //     .update({"status": "Cancel"});
 
     print("sumitted");
 
@@ -337,29 +358,54 @@ class Firestore with ChangeNotifier {
   }
 
 ///////////////Admin//////////////
-  List<SuccessPaymentMoel> allActiveOrderLists = [];
-  fetchAllActiveOrderForAdmin() async {
+  List<SuccessPaymentMoel> allActiveOrderListsinShop = [];
+  fetchAllActiveOrderForAdmin(currentShopId) async {
     QuerySnapshot<Map<String, dynamic>> snpshot = await db
-        .collection("AllOrder")
+        .collection("Shop").doc(currentShopId).collection("MyOrder")
         .where("status", isEqualTo: "Active")
         .get();
 
-    allActiveOrderLists = snpshot.docs.map((e) {
+    allActiveOrderListsinShop = snpshot.docs.map((e) {
+      return SuccessPaymentMoel.fromJson(e.data());
+    }).toList();
+    print("============================");
+  }
+  List<SuccessPaymentMoel> allCompletedOrderListsinShop = [];
+  fetchAllCompletdOrderOrderForAdmin(currentShopId) async {
+    QuerySnapshot<Map<String, dynamic>> snpshot = await db
+        .collection("Shop").doc(currentShopId).collection("MyOrder")
+        .where("status", isEqualTo: "Completed")
+        .get();
+
+    allCompletedOrderListsinShop = snpshot.docs.map((e) {
       return SuccessPaymentMoel.fromJson(e.data());
     }).toList();
     print("============================");
   }
 
-  List<SuccessPaymentMoel> allCompletedOrderLists = [];
-  fetchAllCompletdOrderOrderForAdmin() async {
-    QuerySnapshot<Map<String, dynamic>> snpshot = await db
-        .collection("AllOrder")
-        .where("status", isEqualTo: "Active")
-        .get();
 
-    allCompletedOrderLists = snpshot.docs.map((e) {
-      return SuccessPaymentMoel.fromJson(e.data());
-    }).toList();
-    print("============================");
-  }
+  // fetchAllActiveOrderForAdmin() async {
+  //   QuerySnapshot<Map<String, dynamic>> snpshot = await db
+  //       .collection("AllOrder")
+  //       .where("status", isEqualTo: "Active")
+  //       .get();
+
+  //   allActiveOrderLists = snpshot.docs.map((e) {
+  //     return SuccessPaymentMoel.fromJson(e.data());
+  //   }).toList();
+  //   print("============================");
+  // }
+
+  // List<SuccessPaymentMoel> allCompletedOrderLists = [];
+  // fetchAllCompletdOrderOrderForAdmin() async {
+  //   QuerySnapshot<Map<String, dynamic>> snpshot = await db
+  //       .collection("AllOrder")
+  //       .where("status", isEqualTo: "Completed")
+  //       .get();
+
+  //   allCompletedOrderLists = snpshot.docs.map((e) {
+  //     return SuccessPaymentMoel.fromJson(e.data());
+  //   }).toList();
+  //   print("============================");
+  // }
 }

@@ -1,5 +1,5 @@
 class SuccessPaymentMoel {
-  String transactionId;
+  String shopId;
   String? id;
   String productID;
   String userID;
@@ -17,16 +17,16 @@ class SuccessPaymentMoel {
       required this.userID,
       required this.status,
       required this.from,
-       this.id,
+      this.id,
       required this.image,
       required this.productID,
       required this.productName,
       required this.to,
-      required this.transactionId});
+      required this.shopId});
   Map<String, dynamic> tojson(id) => {
         "status": status,
-        "quantity":quantity,
-        "transactionId": transactionId,
+        "quantity": quantity,
+        "transactionId": shopId,
         "id": id,
         "productID": productID,
         "userID": userID,
@@ -39,7 +39,7 @@ class SuccessPaymentMoel {
   factory SuccessPaymentMoel.fromJson(Map<String, dynamic> json) =>
       SuccessPaymentMoel(
         userID: json["userID"],
-        quantity:json["quantity"],
+        quantity: json["quantity"],
         status: json["status"],
         amount: json["amount"],
         from: json["from"],
@@ -48,6 +48,6 @@ class SuccessPaymentMoel {
         productID: json["productID"],
         productName: json["productName"],
         to: json["to"],
-        transactionId: json["transactionId"],
+        shopId: json["transactionId"],
       );
 }

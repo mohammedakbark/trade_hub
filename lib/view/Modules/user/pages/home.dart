@@ -36,27 +36,27 @@ class _HomeeeState extends State<Homeee> {
         ),
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 40, right: 40, top: 10, bottom: 10),
-              child: Container(
-                width: 340,
-                height: 36,
-                decoration: BoxDecoration(
-                    color: const Color(0x60B7A6FC),
-                    borderRadius: BorderRadius.circular(6)),
-                child: const TextField(
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search here',
-                      prefixIcon: Icon(Icons.search),
-                      hintStyle: TextStyle(
-                          color: Color(0xff544C4C),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14)),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //       left: 40, right: 40, top: 10, bottom: 10),
+            //   child: Container(
+            //     width: 340,
+            //     height: 36,
+            //     decoration: BoxDecoration(
+            //         color: const Color(0x60B7A6FC),
+            //         borderRadius: BorderRadius.circular(6)),
+            //     child: const TextField(
+            //       decoration: InputDecoration(
+            //           border: InputBorder.none,
+            //           hintText: 'Search here',
+            //           prefixIcon: Icon(Icons.search),
+            //           hintStyle: TextStyle(
+            //               color: Color(0xff544C4C),
+            //               fontWeight: FontWeight.w500,
+            //               fontSize: 14)),
+            //     ),
+            //   ),
+            // ),
             Consumer<Firestore>(builder: (context, firestore, child) {
               return FutureBuilder(
                   future: firestore.fetchAllProductBarterAdded(),

@@ -70,7 +70,9 @@ class _ActiveOrderUserState extends State<ActiveOrderUser> {
                                                       widget.orderList[index]
                                                           .userID,
                                                       widget
-                                                          .orderList[index].id);
+                                                          .orderList[index].id,
+                                                      widget.orderList[index]
+                                                          .shopId);
                                               Navigator.of(context).pop();
                                             },
                                             child: const Text("Yes"))

@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:trade_hub/viewmodel/firebase_auths.dart';
 import 'package:trade_hub/viewmodel/firestore.dart';
 
 class ActiveOrderAdmin extends StatefulWidget {
@@ -17,14 +19,14 @@ class _ActiveOrderAdminState extends State<ActiveOrderAdmin> {
       backgroundColor: const Color(0xffFF6565),
       body: Consumer<Firestore>(builder: (context, firestore, child) {
         return FutureBuilder(
-            future: firestore.fetchAllActiveOrderForAdmin(),
+            future: firestore.fetchAllActiveOrderForAdmin(FirebaseAuth.instance.currentUser!.uid),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
               }
-              return firestore.allActiveOrderLists.isEmpty?Center(child: Text("No Data"),):ListView.separated(
+              return firestore.allActiveOrderListsinShop.isEmpty?Center(child: Text("No Data"),):ListView.separated(
                   itemBuilder: (context, index) {
                     return ListTile(
                         leading: Container(
@@ -34,24 +36,24 @@ class _ActiveOrderAdminState extends State<ActiveOrderAdmin> {
                               image: DecorationImage(
                                   fit: BoxFit.fill,
                                   image: NetworkImage(firestore
-                                      .allActiveOrderLists[index].image))),
+                                      .allActiveOrderListsinShop[index].image))),
                         ),
                         title: Text(
-                            firestore.allActiveOrderLists[index].productName),
+                            firestore.allActiveOrderListsinShop[index].productName),
                         subtitle:
-                            Text(firestore.allActiveOrderLists[index].amount),
+                            Text(firestore.allActiveOrderListsinShop[index].amount),
                         trailing: ElevatedButton(
                             onPressed: () async {
                               await firestore.updateToSUBMITOrder(
-                                  firestore.allActiveOrderLists[index].userID,
-                                  firestore.allActiveOrderLists[index].id);
+                                  firestore.allActiveOrderListsinShop[index].userID,
+                                  firestore.allActiveOrderListsinShop[index].id,FirebaseAuth.instance.currentUser!.uid);
                             },
                             child: Text(
                               "Submit Order",
                             )));
                   },
                   separatorBuilder: (context, index) => Divider(),
-                  itemCount: firestore.allActiveOrderLists.length);
+                  itemCount: firestore.allActiveOrderListsinShop.length);
             });
       }),
       // body: colu(
