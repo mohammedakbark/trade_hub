@@ -134,19 +134,41 @@ class FirebaseAuths {
       currentUID = await auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
-        setLoginPrefertrue();
-        if (selected == 0) {
-          noti("Login Successfull");
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const Navigationnn()),
-              (route) => false);
-        } else if (selected == 1) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const Shopsigninnn()),
-              (route) => false);
-        }
+        storeInstence.fetchcurrentUserforType(value.user!.uid).then((value) {
+          print("----------------------------------------------");
+          print(value);
+          if (value == "USER") {
+            if (selected == 0) {
+              setLoginPrefertrue();
+              storeInstence.fetchcurrentDataforLogin(
+                  FirebaseAuth.instance.currentUser!.uid, context, 0);
+            } else {
+              return customeShowDiolog("User Not Found With $email", context);
+            }
+          }
+          if (value == "SHOP") {
+            if (selected == 1) {
+              setLoginPrefertrue();
+              storeInstence.fetchcurrentDataforLogin(
+                  FirebaseAuth.instance.currentUser!.uid, context, 1);
+            } else {
+              return customeShowDiolog("User Not Found With $email", context);
+            }
+          }
+        });
+
+        // if (selected == 0) {
+        //   noti("Login Successfull");
+        //   Navigator.pushAndRemoveUntil(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => const Navigationnn()),
+        //       (route) => false);
+        // } else if (selected == 1) {
+        //   Navigator.pushAndRemoveUntil(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => const Shopsigninnn()),
+        //       (route) => false);
+        // }
         return value.user!.uid;
       });
     } catch (e) {
@@ -235,7 +257,10 @@ customeShowDiolog(String title, BuildContext context) {
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) => AlertDialog(
-      content: Text(title),
+      content: Text(
+        title,
+        style: GoogleFonts.poppins(),
+      ),
       actions: <Widget>[
         TextButton(
             onPressed: () {

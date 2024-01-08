@@ -11,16 +11,14 @@ checkLoginStatus(context) async {
   if (isLoggedIn == true) {
     final uid = FirebaseAuth.instance.currentUser!.uid;
 
-    storeInstence.fetchcurrentData(uid,context);
-
-    
-    // if (uid == adminUid) {
-    //   return await Navigator.pushAndRemoveUntil(
-    //       context,
-    //       MaterialPageRoute(builder: (context) => HomePageAdmin()),
-    //       (route) => false);
-    // }
-    // await storenstence.getloginUSer(uid, context);
+    storeInstence.fetchcurrentUserforType(uid).then((value) {
+      if (value == "USER") {
+        storeInstence.fetchcurrentDataforLogin(uid, context, 0);
+      }
+      if (value == "SHOP") {
+        storeInstence.fetchcurrentDataforLogin(uid, context, 1);
+      }
+    });
   } else {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const Welcomeee()));

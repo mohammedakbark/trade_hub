@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trade_hub/utils/variable.dart';
-import 'package:trade_hub/view/Modules/user/Login%20Pages/otp.dart';
-import 'package:trade_hub/view/Modules/user/Login%20Pages/sign%20in.dart';
-import 'package:trade_hub/view/Modules/user/navigation%20bar.dart';
-import 'package:trade_hub/viewmodel/firebase_auths.dart';
 
-class Loginnn extends StatefulWidget {
-  const Loginnn({super.key});
+class LoginPageShop extends StatefulWidget {
+  LoginPageShop({super.key});
 
   @override
-  State<Loginnn> createState() => _LoginnnState();
+  State<LoginPageShop> createState() => _LoginPageShopState();
 }
 
-class _LoginnnState extends State<Loginnn> {
+class _LoginPageShopState extends State<LoginPageShop> {
   final _formfield = GlobalKey<FormState>();
+
   final emailController = TextEditingController();
+
   final passController = TextEditingController();
+
   bool passToggle = false;
 
   @override
@@ -24,24 +23,15 @@ class _LoginnnState extends State<Loginnn> {
     final hight = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: const Color(0xffB7A6FC),
-      body: SingleChildScrollView(
-        child: Container(
-          height: hight,
-          width: width,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/8099902 1.png',
-                  ))),
-          child: Form(
-            key: _formfield,
-            child: Column(children: [
+      backgroundColor: const Color(0xffFF6565),
+      body: Form(
+        key: _formfield,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
               SizedBox(
-                height: hight * .2,
+                height: hight * .25,
               ),
-
               Text(
                 'Welcome!',
                 style: GoogleFonts.jua(
@@ -49,13 +39,9 @@ class _LoginnnState extends State<Loginnn> {
                     fontSize: 50,
                     color: Colors.white),
               ),
-
-              //--------------------------------------------------------------------------------------------------------------
               SizedBox(
                 height: hight * .1,
               ),
-              //--------------------------------------------------------------------------------------------------------------
-
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: TextFormField(
@@ -75,7 +61,7 @@ class _LoginnnState extends State<Loginnn> {
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       // border: InputBorder.none,
                       filled: true,
-                      fillColor: Color(0xCEFFD465),
+                      fillColor: Colors.white,
                       hintText: 'enter your email',
                       hintStyle: TextStyle(
                           color: Color(0xff544C4C),
@@ -106,7 +92,7 @@ class _LoginnnState extends State<Loginnn> {
                   obscureText: passToggle,
                   decoration: InputDecoration(
                       filled: true,
-                      fillColor: const Color(0xCEFFD465),
+                      fillColor: Colors.white,
                       focusedErrorBorder: const OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(30))),
@@ -155,10 +141,10 @@ class _LoginnnState extends State<Loginnn> {
                 height: hight * .08,
               ),
               InkWell(
-                onTap: () {
+                onTap: () async {
                   if (_formfield.currentState!.validate()) {
-                    authInstence.login(
-                        emailController.text, passController.text, context,0);
+                    await authInstence.login(
+                        emailController.text, passController.text, context, 1);
                     //  Navigator.pushReplacement(context,
                     //         MaterialPageRoute(
                     //       builder: (context) {
@@ -174,9 +160,9 @@ class _LoginnnState extends State<Loginnn> {
                   height: hight * .04,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.amber,
+                      color: Color(0xffFF6565),
                       border: Border.all(
-                        color: Colors.orangeAccent,
+                        color: Colors.white,
                         width: 3,
                       )),
                   child: Center(
@@ -189,102 +175,7 @@ class _LoginnnState extends State<Loginnn> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: hight * .04,
-              ),
-              SizedBox(
-                width: width,
-                height: hight * .04,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Don't have an account ",
-                        style: GoogleFonts.judson(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 18,
-                          color: Colors.white,
-                        )),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (contex) => const Signinnn()));
-                      },
-                      child: Text("SignUp ",
-                          style: GoogleFonts.judson(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Colors.amber,
-                          )),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: hight * .1,
-              ),
-              Text('or sign up using',
-                  style: GoogleFonts.judson(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18,
-                    color: Colors.black,
-                  )),
-              SizedBox(
-                height: hight * .02,
-              ),
-              Container(
-                width: width * .1,
-                height: hight * .04,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7),
-                    color: Colors.white),
-                child: Image.asset(
-                  'assets/Wrapper.png',
-                  width: width * .05,
-                  height: hight * .04,
-                ),
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Container(
-              //       width: 40.75,
-              //       height: 43,
-              //       decoration: BoxDecoration(
-              //           borderRadius: BorderRadius.circular(7),
-              //           color: Colors.white),
-              //       child: Image.asset('assets/Shape.png'),
-              //     ),
-
-              //     //-------------------------------------------------------------------------------------------
-              //     Padding(
-              //       padding: const EdgeInsets.only(left: 10),
-              //       child: Container(
-              //         width: 40.75,
-              //         height: 43,
-              //         decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(7),
-              //             color: Colors.white),
-              //         child: Image.asset('assets/Shape (1).png'),
-              //       ),
-              //     ),
-
-              //     //-------------------------------------------------------------------------------------------
-              //     Padding(
-              //       padding: const EdgeInsets.only(left: 10),
-              //       child: Container(
-              //         width: 40.75,
-              //         height: 43,
-              //         decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(7),
-              //             color: Colors.white),
-              //         child: Image.asset('assets/Wrapper.png'),
-              //       ),
-              //     ),
-              // ],
-              // )
-            ]),
+            ],
           ),
         ),
       ),

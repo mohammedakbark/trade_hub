@@ -1,19 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trade_hub/view/Modules/admin/iphone%2032.dart';
+import 'package:provider/provider.dart';
+import 'package:trade_hub/view/Modules/user/BuyProduct/buyselectedproduct.dart';
+import 'package:trade_hub/view/Modules/user/navigation%20bar.dart';
+import 'package:trade_hub/viewmodel/controller.dart';
 
-
-class Iphone3999 extends StatefulWidget {
-  const Iphone3999({super.key});
+class AfterPaymentPage extends StatefulWidget {
+  String productImage;
+  String productName;
+  int price;
+  String description;
+  String currentUserName;
+  String userAddress;
+  AfterPaymentPage(
+      {super.key,
+      required this.currentUserName,
+      required this.description,
+      required this.price,
+      required this.productImage,
+      required this.productName,
+      required this.userAddress});
 
   @override
-  State<Iphone3999> createState() => _Iphone3999State();
+  State<AfterPaymentPage> createState() => _AfterPaymentPageState();
 }
 
-class _Iphone3999State extends State<Iphone3999> {
+final date = DateTime.now();
+String currentDate = "${date.month}/ ${date.day}";
+String estimateDate = "${date.month} /${date.day + 3}/ ${date.year}";
+
+class _AfterPaymentPageState extends State<AfterPaymentPage> {
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<Controller>(context);
+    final hight = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: ListView(
         children: [
@@ -46,8 +68,8 @@ class _Iphone3999State extends State<Iphone3999> {
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Container(
-              width: 390,
-              height: 198,
+              width: width,
+              height: hight * .23,
               decoration: ShapeDecoration(
                 color: const Color(0xFFB7A6FC),
                 shape: RoundedRectangleBorder(
@@ -67,27 +89,40 @@ class _Iphone3999State extends State<Iphone3999> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Image.asset('assets/Rectangle 18828 (7).png'),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            widget.productImage,
+                            fit: BoxFit.fill,
+                            height: hight * .2,
+                            width: width * .4,
+                          ),
+                        ),
+                        SizedBox(
+                          width: width * .1,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'IPhone',
+                              widget.productName.toUpperCase(),
                               style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 19,
                                   color: Colors.black),
                             ),
                             Text(
-                              'Apple IPhone 14 1TB',
-                              style: GoogleFonts.quicksand(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 10,
-                                  color: Colors.black),
+                              widget.description.toLowerCase(),
+                              style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12,
+                                  color: Color.fromARGB(255, 43, 43, 43)),
                             ),
                             Text(
-                              '₹1,45,000 ',
+                              "₹ ${widget.price}",
                               style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,
@@ -96,71 +131,39 @@ class _Iphone3999State extends State<Iphone3999> {
                             const SizedBox(
                               child: Text(''),
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Color    ',
-                                  style: GoogleFonts.quicksand(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10,
-                                      color: Colors.black),
-                                ),
-                                Text(
-                                  'Black              ',
-                                  style: GoogleFonts.quicksand(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 10,
-                                      color: Colors.black),
-                                ),
-                                Text(
-                                  'Storage    ',
-                                  style: GoogleFonts.quicksand(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10,
-                                      color: Colors.black),
-                                ),
-                                Text(
-                                  '256 GB',
-                                  style: GoogleFonts.quicksand(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 10,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
                           ],
                         )
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Container(
-                      height: 0.3,
-                      color: Colors.black26,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30, right: 30, top: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'View Details',
-                          style: GoogleFonts.quicksand(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              color: Colors.black),
-                        ),
-                        const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15,
-                          color: Color(0xff3763FF),
-                        )
-                      ],
-                    ),
-                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 10),
+                  //   child: Container(
+                  //     height: 0.3,
+                  //     color: Colors.black26,
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding:
+                  //       const EdgeInsets.only(left: 30, right: 30, top: 10),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       // Text(
+                  //       //   'View Details',
+                  //       //   style: GoogleFonts.quicksand(
+                  //       //       fontWeight: FontWeight.w700,
+                  //       //       fontSize: 12,
+                  //       //       color: Colors.black),
+                  //       // ),
+                  //       // const Icon(
+                  //       //   Icons.arrow_forward_ios,
+                  //       //   size: 15,
+                  //       //   color: Color(0xff3763FF),
+                  //       // )
+                  //     ],
+                  //   ),
+                  // )/
                 ],
               ),
             ),
@@ -199,7 +202,7 @@ class _Iphone3999State extends State<Iphone3999> {
                           color: Colors.black),
                     ),
                     Text(
-                      'Anappuram, Kadavathara-682020 ',
+                      widget.userAddress,
                       style: GoogleFonts.inter(
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
@@ -215,7 +218,7 @@ class _Iphone3999State extends State<Iphone3999> {
                             size: 35,
                           ),
                           Text(
-                            ' Delivery by Thu ,Jan 5 - Jan 7,2022',
+                            ' Delivery $currentDate - $estimateDate',
                             style: GoogleFonts.inter(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
@@ -278,7 +281,7 @@ class _Iphone3999State extends State<Iphone3999> {
                           color: const Color(0xff393939)),
                     ),
                     Text(
-                      '₹1,45,000',
+                      '₹ ${widget.price}',
                       style: GoogleFonts.inter(
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
@@ -312,11 +315,13 @@ class _Iphone3999State extends State<Iphone3999> {
 
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: InkWell(onTap: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                return const Iphone3222();
-              },));
-            },
+            child: InkWell(
+              onTap: () {
+                controller.clearData();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => Navigationnn()),
+                    (route) => false);
+              },
               child: Container(
                 height: 60,
                 decoration: BoxDecoration(

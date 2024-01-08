@@ -51,6 +51,7 @@ dependencies:
   provider: ^6.1.1
   country_picker: ^2.0.23
   url_launcher: ^6.2.2
+  upi_india: ^3.0.1
 
 dev_dependencies:
   flutter_test:

@@ -1,145 +1,67 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:trade_hub/model/all_user_model.dart';
-import 'package:trade_hub/model/shopmodel.dart';
-import 'package:trade_hub/utils/variable.dart';
-import 'package:trade_hub/view/Modules/admin/homepageShop.dart';
-import 'package:trade_hub/view/Modules/admin/naviagtionShop.dart';
-import 'package:trade_hub/viewmodel/check_login_preference.dart';
-import 'package:trade_hub/viewmodel/controller.dart';
-import 'package:trade_hub/viewmodel/firebase_auths.dart';
+import 'package:trade_hub/viewmodel/firestore.dart';
 
-class Shopsigninnn extends StatefulWidget {
-  const Shopsigninnn({super.key});
+class ProfileShop extends StatelessWidget {
+  const ProfileShop({super.key});
 
-  @override
-  State<Shopsigninnn> createState() => _ShopsigninnnState();
-}
-
-var shopName = TextEditingController();
-var email = TextEditingController();
-var biography = TextEditingController();
-var country = TextEditingController();
-var phoneNumber = TextEditingController();
-
-var legalbusinessnmae = TextEditingController();
-var address1 = TextEditingController();
-var address2 = TextEditingController();
-var pincode = TextEditingController();
-var city = TextEditingController();
-var country2 = TextEditingController();
-var state = TextEditingController();
-
-var password = TextEditingController();
-var upiController = TextEditingController();
-bool passToggle = true;
-final _formKey = GlobalKey<FormState>();
-final _formKey2 = GlobalKey<FormState>();
-
-class _ShopsigninnnState extends State<Shopsigninnn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFF6565),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
+      appBar: AppBar(
+        backgroundColor: const Color(0xffFF6565),
+        centerTitle: true,
+        title: Text(
+          'Shop Details',
+          style: GoogleFonts.lexendDeca(
+              fontWeight: FontWeight.w600, fontSize: 28, color: Colors.black),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Consumer<Firestore>(builder: (context, fireestore, child) {
+          final data = fireestore.shopDataModel;
+          return Column(
             children: [
-              SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Shop Details',
-                    style: GoogleFonts.lexendDeca(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 28,
-                        color: Colors.black),
-                  ),
-                ],
-              ),
-              Consumer<Controller>(builder: (context, controller, child) {
-                return Padding(
-                    padding:
-                        const EdgeInsets.only(left: 13, right: 13, top: 20),
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 107,
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(60),
-                                  topRight: Radius.circular(4),
-                                  bottomLeft: Radius.circular(4),
-                                  bottomRight: Radius.circular(4))),
-                          child: controller.shopImage != null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(60),
-                                      topRight: Radius.circular(4),
-                                      bottomLeft: Radius.circular(4),
-                                      bottomRight: Radius.circular(4)),
-                                  child: Image.file(
-                                    controller.shopImage!,
-                                    fit: BoxFit.fill,
-                                  ),
-                                )
-                              : Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 25),
-                                      child: InkWell(
-                                          onTap: () async {
-                                            await controller.addShopImage();
-                                          },
-                                          child: Image.asset(
-                                              'assets/Img_box.png')),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Image.asset('assets/Camera.png')
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 70, left: 20),
-                          child: InkWell(
-                            onTap: () async {
-                              await controller.addTagImageShop();
-                            },
-                            child: Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: controller.shopTagImage != null
-                                        ? DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: FileImage(
-                                                controller.shopTagImage!))
-                                        : DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: AssetImage(
-                                                'assets/Group 12655.png')))),
-                          ),
-                        )
-                      ],
-                    ));
-              }),
+              const Padding(
+                  padding: EdgeInsets.only(left: 13, right: 13, top: 20),
+                  child: Stack(
+                    children: [
+                      //     Container(
+                      //       width: double.infinity,
+                      //       height: 107,
+                      //       decoration: const BoxDecoration(
+                      //           color: Colors.white,
+                      //           borderRadius: BorderRadius.only(
+                      //               topLeft: Radius.circular(60),
+                      //               topRight: Radius.circular(4),
+                      //               bottomLeft: Radius.circular(4),
+                      //               bottomRight: Radius.circular(4))),
+                      //       child: Column(
+                      //         children: [
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(top: 25),
+                      //             child: Image.asset('assets/Img_box.png'),
+                      //           ),
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(right: 10),
+                      //             child: Row(
+                      //               mainAxisAlignment: MainAxisAlignment.end,
+                      //               children: [Image.asset('assets/Camera.png')],
+                      //             ),
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     Padding(
+                      //       padding: const EdgeInsets.only(top: 70, left: 20),
+                      //       child: Image.asset('assets/Group 12655.png'),
+                      //     )
+                    ],
+                  )),
 
               //=================================================================Shope info=========================================================
 
@@ -194,15 +116,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: shopName,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: shopName,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -224,7 +147,7 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               // border: InputBorder.none,
-                              hintText: 'My shope',
+                              hintText: "${data?.shopNmae}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -255,21 +178,22 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: email,
-                          validator: (value) {
-                            bool emailvalid = RegExp(
-                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                .hasMatch(value!);
+                          enabled: false,
+                          // controller: email,
+                          // validator: (value) {
+                          //   bool emailvalid = RegExp(
+                          //           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          //       .hasMatch(value!);
 
-                            if (value.isEmpty) {
-                              return "Enter Email";
-                            } else if (!emailvalid) {
-                              return "Enter Valied Email";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          //   if (value.isEmpty) {
+                          //     return "Enter Email";
+                          //   } else if (!emailvalid) {
+                          //     return "Enter Valied Email";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -291,7 +215,7 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      Villiealex@gmail.com',
+                              hintText: "${data?.email}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -322,15 +246,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: biography,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: biography,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -352,7 +277,7 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      Write a short biography',
+                              hintText: "${data?.biography}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -383,15 +308,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: country,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: country,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -413,8 +339,8 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      India',
-                              suffixIcon: Icon(Icons.keyboard_arrow_down),
+                              hintText: "${data?.country}",
+                              // suffixIcon: Icon(Icons.keyboard_arrow_down),
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -445,15 +371,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding: const EdgeInsets.only(
                             left: 20, right: 35, top: 10, bottom: 10),
                         child: TextFormField(
-                          controller: phoneNumber,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: phoneNumber,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -475,13 +402,14 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      6255487125',
+                              hintText: "${data?.phoneNumber}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14)),
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(left: 20, top: 15),
                         child: Row(
@@ -503,15 +431,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding: const EdgeInsets.only(
                             left: 20, right: 35, top: 10, bottom: 10),
                         child: TextFormField(
-                          controller: upiController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: phoneNumber,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -533,7 +462,7 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '12221111@sbi',
+                              hintText: "${data?.upiID}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -625,15 +554,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: legalbusinessnmae,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: legalbusinessnmae,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -655,7 +585,7 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      My shope',
+                              hintText: "${data?.legalBusinessName}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -686,15 +616,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: address1,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: address1,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -716,7 +647,7 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      xxxxxxxxx',
+                              hintText: "${data?.address1}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -747,15 +678,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: address2,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: address2,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -777,7 +709,7 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      xxxxxxxxx',
+                              hintText: "${data?.address2}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -808,15 +740,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: city,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: city,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -838,7 +771,7 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      xxxxx',
+                              hintText: "${data?.city}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -869,15 +802,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: pincode,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: pincode,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -899,7 +833,7 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      6255',
+                              hintText: "${data?.pincode}",
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -930,15 +864,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding:
                             const EdgeInsets.only(left: 20, right: 35, top: 10),
                         child: TextFormField(
-                          controller: country2,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: country2,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -960,9 +895,9 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      India',
-                              suffixIcon:
-                                  Icon(Icons.keyboard_arrow_down_rounded),
+                              hintText: "${data?.country2}",
+                              // suffixIcon:
+                              //     Icon(Icons.keyboard_arrow_down_rounded),
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -993,15 +928,16 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                         padding: const EdgeInsets.only(
                             left: 20, right: 35, top: 10, bottom: 10),
                         child: TextFormField(
-                          controller: state,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is necessory";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
+                          enabled: false,
+                          // controller: state,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "this field is necessory";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          decoration: InputDecoration(
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red),
                                 borderRadius:
@@ -1023,9 +959,9 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6))),
                               border: InputBorder.none,
-                              hintText: '      Kerala',
-                              suffixIcon:
-                                  Icon(Icons.keyboard_arrow_down_rounded),
+                              hintText: "${data?.state}",
+                              // suffixIcon:
+                              //     Icon(Icons.keyboard_arrow_down_rounded),
                               hintStyle: TextStyle(
                                   color: Color(0xff544C4C),
                                   fontWeight: FontWeight.w500,
@@ -1111,6 +1047,9 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
                     ],
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 100,
               ),
 
               //======================================shop address===================================================================================
@@ -1653,229 +1592,211 @@ class _ShopsigninnnState extends State<Shopsigninnn> {
 
               //======================submit===============================================================================
 
-              Consumer<Controller>(builder: (context, controller, child) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 30, bottom: 50),
-                  child: InkWell(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          if (controller.shopImage != null &&
-                              controller.shopTagImage != null) {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: Form(
-                                        key: _formKey2,
-                                        child: Column(
-                                          children: [
-                                            TextFormField(
-                                              enabled: false,
-                                              controller: email,
-                                              decoration: const InputDecoration(
-                                                  enabled: false,
-                                                  focusedErrorBorder: OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(30))),
-                                                  errorBorder: OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(30))),
-                                                  enabledBorder: OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(30))),
-                                                  disabledBorder: OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(30))),
-                                                  focusedBorder: OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius: BorderRadius.all(Radius.circular(30))),
-                                                  // border: InputBorder.none,
-                                                  filled: true,
-                                                  fillColor: Color(0xffFF6565),
-                                                  hintText: 'enter your email',
-                                                  hintStyle: TextStyle(color: Color(0xff544C4C), fontWeight: FontWeight.w500, fontSize: 14)),
-                                              validator: (value) {
-                                                bool emailvalid = RegExp(
-                                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                                    .hasMatch(value!);
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 30, bottom: 50),
+              //   child: InkWell(
+              //       onTap: () {
+              //         if (_formKey.currentState!.validate()) {
+              //           showDialog(
+              //               context: context,
+              //               builder: (context) => AlertDialog(
+              //                     title: Form(
+              //                       key: _formKey2,
+              //                       child: Column(
+              //                         children: [
+              //                           TextFormField(
+              //                             enabled: false,
+              //                             controller: email,
+              //                             decoration: const InputDecoration(
+              //                                 enabled: false,
+              //                                 focusedErrorBorder: OutlineInputBorder(
+              //                                     borderSide: BorderSide.none,
+              //                                     borderRadius: BorderRadius.all(
+              //                                         Radius.circular(30))),
+              //                                 errorBorder: OutlineInputBorder(
+              //                                     borderSide: BorderSide.none,
+              //                                     borderRadius: BorderRadius.all(
+              //                                         Radius.circular(30))),
+              //                                 enabledBorder: OutlineInputBorder(
+              //                                     borderSide: BorderSide.none,
+              //                                     borderRadius: BorderRadius.all(
+              //                                         Radius.circular(30))),
+              //                                 disabledBorder: OutlineInputBorder(
+              //                                     borderSide: BorderSide.none,
+              //                                     borderRadius: BorderRadius.all(
+              //                                         Radius.circular(30))),
+              //                                 focusedBorder: OutlineInputBorder(
+              //                                     borderSide: BorderSide.none,
+              //                                     borderRadius:
+              //                                         BorderRadius.all(
+              //                                             Radius.circular(30))),
+              //                                 // border: InputBorder.none,
+              //                                 filled: true,
+              //                                 fillColor: Color(0xffFF6565),
+              //                                 hintText: 'enter your email',
+              //                                 hintStyle: TextStyle(color: Color(0xff544C4C), fontWeight: FontWeight.w500, fontSize: 14)),
+              //                             validator: (value) {
+              //                               bool emailvalid = RegExp(
+              //                                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              //                                   .hasMatch(value!);
 
-                                                if (value.isEmpty) {
-                                                  return "Enter Email";
-                                                } else if (!emailvalid) {
-                                                  return "Enter Valied Email";
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 30,
-                                            ),
-                                            TextFormField(
-                                              controller: password,
-                                              obscureText: passToggle,
-                                              decoration: InputDecoration(
-                                                  filled: true,
-                                                  fillColor:
-                                                      const Color(0xffFF6565),
-                                                  focusedErrorBorder: const OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(30))),
-                                                  errorBorder: const OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(30))),
-                                                  enabledBorder: const OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(30))),
-                                                  focusedBorder: const OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none,
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(30))),
-                                                  border: InputBorder.none,
-                                                  hintText: ' password',
-                                                  hintStyle:
-                                                      const TextStyle(color: Color(0xff544C4C), fontWeight: FontWeight.w500, fontSize: 14),
-                                                  suffixIcon: InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        passToggle =
-                                                            !passToggle;
-                                                      });
-                                                    },
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 20),
-                                                      child: Icon(passToggle
-                                                          ? Icons.visibility
-                                                          : Icons
-                                                              .visibility_off),
-                                                    ),
-                                                  )),
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return "Entee Password";
-                                                } else if (password
-                                                        .text.length <
-                                                    6) {
-                                                  return "Password Length Should not be more than 6 characters";
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      actionsAlignment:
-                                          MainAxisAlignment.center,
-                                      actions: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ElevatedButton(
-                                              onPressed: () async {
-                                                if (_formKey2.currentState!
-                                                    .validate()) {
-                                                  await authInstence
-                                                      .sign(
-                                                          email.text,
-                                                          password.text,
-                                                          context)
-                                                      .then((value) async {
-                                                    await storeInstence.addShopCollection(
-                                                        FirebaseAuth.instance
-                                                            .currentUser?.uid,
-                                                        ShopDataModel(
-                                                          upiID: upiController.text,
-                                                            address1:
-                                                                address1.text,
-                                                            tagImage:"${ controller.shopTagImageURL}",
-                                                            shopImage: "${controller.shopImageURL}",
-                                                            type: "Shop",
-                                                            address2:
-                                                                address2.text,
-                                                            biography:
-                                                                biography.text,
-                                                            city: city.text,
-                                                            country:
-                                                                country.text,
-                                                            country2:
-                                                                country2.text,
-                                                            email: email.text,
-                                                            legalBusinessName:
-                                                                legalbusinessnmae
-                                                                    .text,
-                                                            phoneNumber:
-                                                                phoneNumber
-                                                                    .text,
-                                                            pincode:
-                                                                pincode.text,
-                                                            shopID: FirebaseAuth
-                                                                .instance
-                                                                .currentUser!
-                                                                .uid,
-                                                            shopNmae:
-                                                                shopName.text,
-                                                            state: state.text));
-                                                    await storeInstence.addAllUser(
-                                                        FirebaseAuth.instance
-                                                            .currentUser!.uid,
-                                                        AllUserModel(
-                                                            email: email.text,
-                                                            type: "SHOP",
-                                                            userId: FirebaseAuth
-                                                                .instance
-                                                                .currentUser!
-                                                                .uid));
-                                                  });
-                                                  setLoginPrefertrue();
-                                                  Navigator.pushAndRemoveUntil(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              NavigationShop()),
-                                                      (route) => false);
-                                                }
-                                              },
-                                              child: Text("Create Account",
-                                                  style: GoogleFonts.inter(
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 15,
-                                                      color: const Color(
-                                                          0xff1D1E20)))),
-                                        )
-                                      ],
-                                    ));
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        "ADD SHOP IMAGE AND SHOP TAG IMAGE")));
-                          }
-                        }
-                      },
-                      child: Image.asset('assets/Group 12680.png')),
-                );
-              })
+              //                               if (value.isEmpty) {
+              //                                 return "Enter Email";
+              //                               } else if (!emailvalid) {
+              //                                 return "Enter Valied Email";
+              //                               } else {
+              //                                 return null;
+              //                               }
+              //                             },
+              //                           ),
+              //                           const SizedBox(
+              //                             height: 30,
+              //                           ),
+              //                           TextFormField(
+              //                             controller: password,
+              //                             obscureText: passToggle,
+              //                             decoration: InputDecoration(
+              //                                 filled: true,
+              //                                 fillColor:
+              //                                     const Color(0xffFF6565),
+              //                                 focusedErrorBorder:
+              //                                     const OutlineInputBorder(
+              //                                         borderSide:
+              //                                             BorderSide.none,
+              //                                         borderRadius: BorderRadius.all(
+              //                                             Radius.circular(30))),
+              //                                 errorBorder: const OutlineInputBorder(
+              //                                     borderSide: BorderSide.none,
+              //                                     borderRadius: BorderRadius.all(
+              //                                         Radius.circular(30))),
+              //                                 enabledBorder: const OutlineInputBorder(
+              //                                     borderSide: BorderSide.none,
+              //                                     borderRadius:
+              //                                         BorderRadius.all(
+              //                                             Radius.circular(30))),
+              //                                 focusedBorder: const OutlineInputBorder(
+              //                                     borderSide: BorderSide.none,
+              //                                     borderRadius:
+              //                                         BorderRadius.all(
+              //                                             Radius.circular(30))),
+              //                                 border: InputBorder.none,
+              //                                 hintText: ' password',
+              //                                 hintStyle: const TextStyle(
+              //                                     color: Color(0xff544C4C),
+              //                                     fontWeight: FontWeight.w500,
+              //                                     fontSize: 14),
+              //                                 suffixIcon: InkWell(
+              //                                   onTap: () {
+              //                                     setState(() {
+              //                                       passToggle = !passToggle;
+              //                                     });
+              //                                   },
+              //                                   child: Padding(
+              //                                     padding:
+              //                                         const EdgeInsets.only(
+              //                                             right: 20),
+              //                                     child: Icon(passToggle
+              //                                         ? Icons.visibility
+              //                                         : Icons.visibility_off),
+              //                                   ),
+              //                                 )),
+              //                             validator: (value) {
+              //                               if (value!.isEmpty) {
+              //                                 return "Entee Password";
+              //                               } else if (password.text.length <
+              //                                   6) {
+              //                                 return "Password Length Should not be more than 6 characters";
+              //                               } else {
+              //                                 return null;
+              //                               }
+              //                             },
+              //                           ),
+              //                         ],
+              //                       ),
+              //                     ),
+              //                     actionsAlignment: MainAxisAlignment.center,
+              //                     actions: [
+              //                       Padding(
+              //                         padding: const EdgeInsets.all(8.0),
+              //                         child: ElevatedButton(
+              //                             onPressed: () async {
+              //                               if (_formKey2.currentState!
+              //                                   .validate()) {
+              //                                 await authInstence
+              //                                     .sign(email.text,
+              //                                         password.text, context)
+              //                                     .then((value) async {
+              //                                   await storeInstence
+              //                                       .addShopCollection(
+              //                                           FirebaseAuth.instance
+              //                                               .currentUser?.uid,
+              //                                           ShopDataModel(
+              //                                               address1:
+              //                                                   address1.text,
+              //                                               tagImage: "",
+              //                                               shopImage: "",
+              //                                               type: "Shop",
+              //                                               address2:
+              //                                                   address2.text,
+              //                                               biography:
+              //                                                   biography.text,
+              //                                               city: city.text,
+              //                                               country:
+              //                                                   country.text,
+              //                                               country2:
+              //                                                   country2.text,
+              //                                               email: email.text,
+              //                                               legalBusinessName:
+              //                                                   legalbusinessnmae
+              //                                                       .text,
+              //                                               phoneNumber:
+              //                                                   phoneNumber
+              //                                                       .text,
+              //                                               pincode:
+              //                                                   pincode.text,
+              //                                               shopID: FirebaseAuth
+              //                                                   .instance
+              //                                                   .currentUser!
+              //                                                   .uid,
+              //                                               shopNmae:
+              //                                                   shopName.text,
+              //                                               state: state.text));
+              //                                   await storeInstence.addAllUser(
+              //                                       FirebaseAuth.instance
+              //                                           .currentUser!.uid,
+              //                                       AllUserModel(
+              //                                           email: email.text,
+              //                                           type: "SHOP",
+              //                                           userId: FirebaseAuth
+              //                                               .instance
+              //                                               .currentUser!
+              //                                               .uid));
+              //                                 });
+              //                                 setLoginPrefertrue();
+              //                                 Navigator.pushAndRemoveUntil(
+              //                                     context,
+              //                                     MaterialPageRoute(
+              //                                         builder: (context) =>
+              //                                             NavigationShop()),
+              //                                     (route) => false);
+              //                               }
+              //                             },
+              //                             child: Text("Create Account",
+              //                                 style: GoogleFonts.inter(
+              //                                     fontWeight: FontWeight.w700,
+              //                                     fontSize: 15,
+              //                                     color: const Color(
+              //                                         0xff1D1E20)))),
+              //                       )
+              //                     ],
+              //                   ));
+              //         }
+              //       },
+              //       child: Image.asset('assets/Group 12680.png')),
+              // )
             ],
-          ),
-        ),
+          );
+        }),
       ),
     );
   }

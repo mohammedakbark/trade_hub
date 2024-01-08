@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trade_hub/view/Modules/admin/loginPageShop.dart';
 import 'package:trade_hub/view/Modules/admin/shop%20sign%20in.dart';
 import 'package:trade_hub/view/Modules/user/Login%20Pages/log%20in.dart';
 import 'package:trade_hub/view/Modules/user/Login%20Pages/sign%20in.dart';
@@ -110,10 +111,88 @@ class _WelcomeeeState extends State<Welcomeee> {
 
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Shopsigninnn()));
+                        showDialog(
+                            context: context,
+                            builder: (context) => Center(
+                                  child: Container(
+                                    margin: EdgeInsets.all(30),
+                                    padding: EdgeInsets.only(top: 100),
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xffFF6565),
+                                        borderRadius:
+                                            BorderRadius.circular(30)),
+                                    height: hight / 2,
+                                    width: width,
+                                    child: Column(
+                                      // mainAxisAlignment:
+                                      // MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Image.asset('assets/icon _cart_.png'),
+                                        SizedBox(
+                                          height: hight * .01,
+                                        ),
+
+                                        // Text(
+                                        //   'Shop',
+                                        //   style: GoogleFonts.inter(
+                                        //       fontWeight: FontWeight.w700,
+                                        //       fontSize: 43,
+                                        //       color: Colors.black),
+                                        // ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 20, top: 50),
+                                          child: SizedBox(
+                                            width: width * .5,
+                                            height: 60,
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.black),
+                                              onPressed: () {
+                                                Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                             LoginPageShop()));
+                                              },
+                                              child: Text(
+                                                'Log in',
+                                                style: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 19,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: width * .5,
+                                          height: 60,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.black),
+                                            onPressed: () {
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const Shopsigninnn()));
+                                            },
+                                            child: Text(
+                                              'Sign up',
+                                              style: GoogleFonts.inter(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 19,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ));
+
                         //********************************Shop sign up */
                       },
                       child: Container(
@@ -146,58 +225,58 @@ class _WelcomeeeState extends State<Welcomeee> {
                   ],
                 ),
               ),
-              Positioned(
-                top: hight * .86,
-                left: 0,
-                right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const Loginnn();
-                          },
-                        ));
-                      },
-                      child: Container(
-                        width: 113,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: const Color(0xff060330)),
-                        child: Center(
-                          child: Text(
-                            'Log in',
-                            style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 19,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 94.5,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xff060330)),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text(
-                          'Skip',
-                          style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 19,
-                              color: Colors.black),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+              // Positioned(
+              //   top: hight * .86,
+              //   left: 0,
+              //   right: 0,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //     children: [
+              //       InkWell(
+              //         onTap: () {
+              //           Navigator.pushReplacement(context, MaterialPageRoute(
+              //             builder: (context) {
+              //               return const Loginnn();
+              //             },
+              //           ));
+              //         },
+              //         child: Container(
+              //           width: 113,
+              //           height: 50,
+              //           decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(10),
+              //               color: const Color(0xff060330)),
+              //           child: Center(
+              //             child: Text(
+              //               'Log in',
+              //               style: GoogleFonts.inter(
+              //                   fontWeight: FontWeight.w400,
+              //                   fontSize: 19,
+              //                   color: Colors.white),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //         width: 94.5,
+              //         height: 50,
+              //         decoration: BoxDecoration(
+              //             border: Border.all(color: const Color(0xff060330)),
+              //             color: Colors.white,
+              //             borderRadius: BorderRadius.circular(10)),
+              //         child: Center(
+              //           child: Text(
+              //             'Skip',
+              //             style: GoogleFonts.inter(
+              //                 fontWeight: FontWeight.w400,
+              //                 fontSize: 19,
+              //                 color: Colors.black),
+              //           ),
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ));

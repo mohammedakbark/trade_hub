@@ -74,8 +74,9 @@ class _HomeeeState extends State<Homeee> {
                         : Expanded(
                             child: GridView.builder(
                               gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2, childAspectRatio: .8),
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: hight * .0009),
                               itemCount: data.length,
                               itemBuilder: (context, index) {
                                 return Card(
@@ -169,9 +170,11 @@ class _HomeeeState extends State<Homeee> {
                                                     TextButton(
                                                         onPressed: () async {
                                                           try {
-                                                            await whatsapp(data[
-                                                                    index]
-                                                                .whatsappNumber,data[index].productName);
+                                                            await whatsapp(
+                                                                data[index]
+                                                                    .whatsappNumber,
+                                                                data[index]
+                                                                    .productName);
                                                           } catch (e) {
                                                             return customeShowDiolog(
                                                                 "$e", context);
@@ -256,10 +259,3 @@ class _HomeeeState extends State<Homeee> {
     }
   }
 }
-
-  // whatsapp(uri) async {
-  //   if (await canLaunchUrl(uri)) {
-  //     await launchUrl(uri);
-  //   }
-  // }
-// }

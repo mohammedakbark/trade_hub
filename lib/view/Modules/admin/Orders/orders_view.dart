@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trade_hub/view/Modules/admin/Orders/orderyabs/active.dart';
-import 'package:trade_hub/view/Modules/admin/Orders/orderyabs/cancelled.dart';
+import 'package:trade_hub/view/removedpages/cancelled.dart';
 import 'package:trade_hub/view/Modules/admin/Orders/orderyabs/completed.dart';
 
 class MyorderAdmin extends StatefulWidget {
@@ -15,7 +15,7 @@ class _MyorderAdminState extends State<MyorderAdmin> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
             backgroundColor: const Color(0xffFF6565),
             body: SafeArea(
@@ -64,16 +64,7 @@ class _MyorderAdminState extends State<MyorderAdmin> {
                       ),
                       Tab(
                         child: Text(
-                          'Completed',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          'Cancelled',
+                          'Shipped',
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
@@ -91,8 +82,7 @@ class _MyorderAdminState extends State<MyorderAdmin> {
                     child: TabBarView(
                   children: [
                     ActiveOrderAdmin(),
-                    CompletedOrderAdmin(),
-                    CancelledOrderAdmin()
+                    ShippedOrderForAdmin(),
                   ],
                 ))
               ],
